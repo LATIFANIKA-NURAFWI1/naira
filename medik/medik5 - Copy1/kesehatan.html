@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kesehatan • Nafas Baru</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="assets/css/nafasbaru.css" />
+</head>
+
+<!-- Header -->
+<header class="grad-header sticky top-0 z-50 shadow">
+  <div class="container-max flex items-center justify-between py-3">
+    <a href="index.html" class="flex items-center gap-3 logo">
+      <img src="assets/images/logo.png" alt="Logo Nafas Baru" class="logo-img" />
+      <span class="logo-text font-[Poppins]">Nafas Baru</span>
+    </a>
+
+      <nav class="hidden md:flex items-center gap-1" id="navDesktop">
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10" href="index.html">
+        <i class="fa-solid fa-house mr-2"></i>Home</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10" href="fitur.html">
+        <i class="fa-solid fa-shapes mr-2"></i>Fitur</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10" href="challenge.html">
+        <i class="fa-solid fa-flag-checkered mr-2"></i>Challenge</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10" href="kesehatan.html">
+        <i class="fa-solid fa-heart-pulse mr-2"></i>Kesehatan</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10" href="finansial.html">
+        <i class="fa-solid fa-sack-dollar mr-2"></i>Finansial</a>
+    </nav>
+      <div class="flex items-center gap-2">
+        <!-- Theme Toggle -->
+      <button id="darkToggle" class="px-3 py-2 rounded-lg bg-white/15 hover:bg-white/25" aria-label="Toggle theme">
+        <span class="theme-icon" data-theme="light">🌙</span>
+        <span class="theme-icon hidden" data-theme="dark">☀️</span>
+      </button>
+
+        <!-- Mobile Menu Button -->
+      <button id="menuBtn" class="md:hidden px-3 py-2 rounded-lg bg-white/15" aria-controls="mobileMenu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </div>
+
+    <!-- Mobile Menu -->
+  <div id="mobileMenu" class="md:hidden hidden border-t border-white/20 mobile-panel">
+    <div class="container-max py-2 flex flex-col">
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-2" href="index.html">
+        <i class="fa-solid fa-house w-5 text-center"></i>Home</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-2" href="fitur.html">
+        <i class="fa-solid fa-shapes w-5 text-center"></i>Fitur</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-2" href="challenge.html">
+        <i class="fa-solid fa-flag-checkered w-5 text-center"></i>Challenge</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-2" href="kesehatan.html">
+        <i class="fa-solid fa-heart-pulse w-5 text-center"></i>Kesehatan</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-2" href="finansial.html">
+        <i class="fa-solid fa-sack-dollar w-5 text-center"></i>Finansial</a>
+    <div class="border-t border-white/20 mt-2 pt-2">
+      </div>
+    </div>
+  </header>
+
+  <section class="container-max py-14">
+    <h2 class="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-4">Health Tracking</h2>
+    <div class="surface card p-6 reveal">
+      <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div>
+          <div class="text-sm text-slate-500">Kamu berhenti selama</div>
+          <div class="text-4xl font-extrabold text-slate-800 dark:text-slate-100"><span id="ht_days">0</span> hari</div>
+          <div class="mt-4 h-4 w-full rounded-full bg-[#FFF8E7] dark:bg-slate-700 overflow-hidden">
+            <div id="ht_bar" class="h-4" style="width:0%"></div>
+          </div>
+          <div class="grid grid-cols-3 gap-3 mt-4 text-xs">
+            <div class="surface card p-3 text-center">
+              <div class="text-slate-500">Hari Berhasil</div>
+              <div class="font-semibold text-slate-800 dark:text-slate-100" id="ht_success">0</div>
+            </div>
+            <div class="surface card p-3 text-center">
+              <div class="text-slate-500">Estimasi Hemat</div>
+              <div class="font-semibold text-slate-800 dark:text-slate-100" id="ht_saved">0</div>
+            </div>
+            <div class="surface card p-3 text-center">
+              <div class="text-slate-500">Target</div>
+              <div class="font-semibold text-slate-800 dark:text-slate-100" id="ht_target">30</div>
+            </div>
+          </div>
+          <button id="ht_update" class="mt-4 px-5 py-3 rounded-xl grad-secondary text-white font-semibold hover:opacity-95 transition inline-flex items-center gap-2">
+            <i class="fa-solid fa-circle-check"></i>
+            Update Progress Hari Ini
+          </button>
+        </div>
+        <div class="text-sm text-slate-600 dark:text-slate-300">
+          <div class="font-semibold mb-2">Hari Ini</div>
+          <div id="ht_message" class="mb-3">Mulai hari ini lebih baik.</div>
+          <div class="font-semibold mb-2">Tips Singkat</div>
+          <div id="ht_tip" class="text-slate-700 dark:text-slate-200 mb-4">Minum banyak air hari ini.</div>
+          <div class="font-semibold mb-2">Riwayat Progres</div>
+          <ul id="ht_log" class="list-disc ml-5 space-y-1 max-h-40 overflow-auto pr-2"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg bg-emerald-500 text-white shadow hidden">Berhasil</div>
+
+  <footer class="py-8 text-center text-xs text-slate-500">© <span id="year"></span> NafasBaru</footer>
+
+  <script src="assets/js/nafasbaru.js"></script>
+</body>
+</html>

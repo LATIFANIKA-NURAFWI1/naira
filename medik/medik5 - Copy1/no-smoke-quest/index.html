@@ -1,0 +1,211 @@
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>No Smoke Quest — 30 Hari Bebas Asap</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <noscript>
+    <div class="noscript"></div>
+  </noscript>
+
+  <header class="app-header" role="banner">
+    <div class="container header-inner">
+      <h1 class="brand" aria-label="Judul aplikasi">No Smoke Quest</h1>
+      <nav class="header-actions" aria-label="Aksi utama">
+        <button id="btnLogToday" class="btn btn-primary">Log Hari Ini</button>
+        <button id="btnShare" class="btn" title="Bagikan progres">Bagikan</button>
+        <button id="btnExport" class="btn" title="Export data">Export</button>
+        <label for="inputImport" class="btn" title="Import data">Import</label>
+        <input id="inputImport" type="file" accept="application/json" class="sr-only" aria-label="Pilih berkas JSON untuk diimport" />
+        <button id="btnReset" class="btn btn-danger" title="Reset challenge">Reset</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Onboarding Modal --
+  <section id="onboarding" class="modal" role="dialog" aria-modal="true" aria-labelledby="onbTitle" aria-describedby="onbDesc">
+    <div class="modal-card">
+      <h2 id="onbTitle">Selamat Datang di No Smoke Quest</h2>
+      <p id="onbDesc" class="muted">Ikuti tantangan 30 hari untuk berhenti merokok. Kumpulkan poin, raih badge, dan tabung uang rokok.</p>
+      <ul class="bullets">
+        <li><strong>Level & Poin:</strong> Selesaikan level mingguan dan dapatkan poin bonus.</li>
+        <li><strong>Log Harian:</strong> Catat rokok, mood, dan aktivitas pengganti.</li>
+        <li><strong>Tabungan:</strong> Tiap hari tanpa rokok menambah tabungan.</li>
+      </ul>
+      <form id="onboardingForm" class="grid gap">
+        <div class="form-row">
+          <label for="onbStartDate">Tanggal Mulai</label>
+          <input id="onbStartDate" type="date" required aria-required="true" />
+        </div>
+        <div class="form-row">
+          <label for="onbPrice">Harga per batang rokok</label>
+          <input id="onbPrice" type="number" min="0" step="100" placeholder="contoh: 2000" required aria-required="true" />
+        </div>
+        <div class="form-row">
+          <label for="onbTheme">Tema</label>
+          <select id="onbTheme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Mulai Challenge</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <main id="app" class="hidden" role="main">
+    <!- Dashboard -->
+    <section class="section" id="dashboard" aria-labelledby="dashTitle">
+      <div class="container">
+        <h2 id="dashTitle" class="section-title">Dashboard</h2>
+        <div class="grid metrics">
+          <div class="metric">
+            <div class="metric-label">Hari Challenge</div>
+            <div class="metric-value"><span id="dayNow">1</span> / 30</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Level</div>
+            <div class="metric-value" id="levelNow">Level 1</div>
+            <div class="progress" aria-label="Progres menuju level berikutnya" aria-live="polite">
+              <div class="progress-bar" id="levelProgress" style="width: 0%" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            </div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Total Poin</div>
+            <div class="metric-value" id="pointsTotal">0</div>
+          </div>
+        </div>
+
+        <div class="grid stats">
+          <div class="stat">
+            <div class="stat-label">Hari bebas asap</div>
+            <div class="stat-value" id="statsSmokeFree">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Tabungan (Rp)</div>
+            <div class="stat-value" id="statsSavings">0</div>
+            <button id="btnClaimSavings" class="btn xs">Gunakan</button>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Streak terpanjang</div>
+            <div class="stat-value" id="statsBestStreak">0</div>
+          </div>
+        </div>
+
+        <div class="badges-wrap">
+          <h3 class="sub-title">Badge</h3>
+          <div id="badgesList" class="badge-list" aria-live="polite"></div>
+        </div>
+
+        <div class="cta-row">
+          <button id="btnOpenLog" class="btn btn-primary">Log Hari Ini</button>
+          <button id="btnViewStats" class="btn">Lihat Statistik</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Log Harian -->
+    <section class="section" id="logSection" aria-labelledby="logTitle">
+      <div class="container">
+        <h2 id="logTitle" class="section-title">Log Harian</h2>
+        <form id="logForm" class="grid gap" aria-describedby="logHelp">
+          <p id="logHelp" class="muted">Isi log untuk hari ini. Jika tidak merokok, Anda akan mendapat poin dan tabungan.
+            Jika tidak merokok, Anda dapat mengisi perkiraan jumlah yang biasanya Anda habiskan untuk menghitung tabungan.</p>
+
+          <fieldset class="fieldset">
+            <legend class="legend">Apakah Anda merokok hari ini?</legend>
+            <label class="radio"><input type="radio" name="smoked" value="no" checked /> Tidak</label>
+            <label class="radio"><input type="radio" name="smoked" value="yes" /> Ya</label>
+          </fieldset>
+
+          <div class="form-row">
+            <label for="cigs">Jumlah rokok hari ini / biasanya</label>
+            <input id="cigs" type="number" min="0" step="1" placeholder="cth: 5" />
+          </div>
+
+          <div class="form-row">
+            <label for="mood">Mood</label>
+            <select id="mood">
+              <option>Happy</option>
+              <option selected>Neutral</option>
+              <option>Stress</option>
+              <option>Angry</option>
+            </select>
+          </div>
+
+          <fieldset class="fieldset">
+            <legend class="legend">Aktivitas pengganti (pilih yang dilakukan)</legend>
+            <div class="checks">
+              <label class="check"><input type="checkbox" value="water" /> Minum air</label>
+              <label class="check"><input type="checkbox" value="gum" /> Permen karet</label>
+              <label class="check"><input type="checkbox" value="walk" /> Jalan kaki</label>
+              <label class="check"><input type="checkbox" value="breath" /> Napas dalam</label>
+              <label class="check"><input type="checkbox" value="meditate" /> Meditasi</label>
+              <label class="check"><input type="checkbox" value="exercise" /> Olahraga</label>
+              <label class="check"><input type="checkbox" value="callFriend" /> Hubungi teman</label>
+              <label class="check"><input type="checkbox" value="journaling" /> Jurnal</label>
+            </div>
+          </fieldset>
+
+          <div class="form-row">
+            <label for="notes">Catatan (opsional)</label>
+            <textarea id="notes" rows="3" placeholder="Bagaimana harimu?"></textarea>
+          </div>
+
+          <label class="check">
+            <input id="shareToday" type="checkbox" /> Bagikan progres hari ini
+          </label>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Stats (ringkas) -->
+    <section class="section" id="statsSection" aria-labelledby="statsTitle">
+      <div class="container">
+        <h2 id="statsTitle" class="section-title">Statistik</h2>
+        <div class="muted" id="statsSummary">Tidak ada data statistik yang tersedia.</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toasts -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Completion Modal (Day 30) -->
+  <section id="completeModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="compTitle" aria-describedby="compDesc">
+    <div class="modal-card">
+      <h2 id="compTitle">Selamat!</h2>
+      <p id="compDesc" class="muted">Anda menyelesaikan No Smoke Quest selama 30 hari. Luar biasa!</p>
+      <div class="grid metrics">
+        <div class="metric">
+          <div class="metric-label">Total Poin</div>
+          <div id="compPoints" class="metric-value">0</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Total Tabungan</div>
+          <div id="compSavings" class="metric-value">0</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="btnCertificate" class="btn btn-primary">Download Certificate</button>
+        <button data-close-complete class="btn">Tutup</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aksesibilitas: skip link -->
+  <a class="skip-link" href="#dashboard">Lewati ke Dashboard</a>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

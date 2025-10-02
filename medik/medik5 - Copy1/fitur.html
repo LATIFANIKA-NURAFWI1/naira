@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitur - Nafas Baru</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkfK1D+3f8dS+Jz7v4S3v71S6uEJkP1wz6aS3yWQYh9y5G7S3vZP5o9TA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="assets/css/nafasbaru.css" />
+</head>
+
+<body class="font-[Inter] bg-[#FFF8E7] dark:bg-[#0b1020]">
+<!-- Header -->
+<header class="grad-header sticky top-0 z-50 shadow">
+  <div class="container-max flex items-center justify-between py-3">
+    <a href="index.html" class="flex items-center gap-3 logo">
+      <img src="assets/images/logo.png" alt="Logo Nafas Baru" class="logo-img" />
+      <span class="logo-text font-[Poppins]">Nafas Baru</span>
+    </a>
+
+      <nav class="hidden md:flex items-center gap-1" id="navDesktop">
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10" href="index.html">
+        <i class="fa-solid fa-house mr-2"></i>Home</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10" href="fitur.html">
+        <i class="fa-solid fa-shapes mr-2"></i>Fitur</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10" href="challenge.html">
+        <i class="fa-solid fa-flag-checkered mr-2"></i>Challenge</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10" href="kesehatan.html">
+        <i class="fa-solid fa-heart-pulse mr-2"></i>Kesehatan</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10" href="finansial.html">
+        <i class="fa-solid fa-sack-dollar mr-2"></i>Finansial</a>
+    </nav>
+        <!-- Theme Toggle -->
+      <button id="darkToggle" class="px-3 py-2 rounded-lg bg-white/15 hover:bg-white/25" aria-label="Toggle theme">
+        <span class="theme-icon" data-theme="light">🌙</span>
+        <span class="theme-icon hidden" data-theme="dark">☀️</span>
+      </button>
+
+        <!-- Mobile Menu Button -->
+      <button id="menuBtn" class="md:hidden px-3 py-2 rounded-lg bg-white/15" aria-controls="mobileMenu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </div>
+
+    <!-- Mobile Menu -->
+  <div id="mobileMenu" class="md:hidden hidden border-t border-white/20 mobile-panel">
+    <div class="container-max py-2 flex flex-col">
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-2" href="index.html">
+        <i class="fa-solid fa-house w-5 text-center"></i>Home</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-2" href="fitur.html">
+        <i class="fa-solid fa-shapes w-5 text-center"></i>Fitur</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-2" href="challenge.html">
+        <i class="fa-solid fa-flag-checkered w-5 text-center"></i>Challenge</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-2" href="kesehatan.html">
+        <i class="fa-solid fa-heart-pulse w-5 text-center"></i>Kesehatan</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-2" href="finansial.html">
+        <i class="fa-solid fa-sack-dollar w-5 text-center"></i>Finansial</a>
+    <div class="border-t border-white/20 mt-2 pt-2">
+      </div>
+    </div>
+  </header>
+
+  <!-- Fitur -->
+  <section class="container-max py-14">
+    <h2 class="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-6">Fitur Utama</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="surface card p-6 reveal">
+        <div class="text-xl font-semibold mb-1"><i class="fa-solid fa-flag-checkered text-orange-400 mr-2"></i>Challenge Tracker</div>
+        <p class="text-slate-600 dark:text-slate-300">Durasi 1–30 hari, progress bar dinamis, dan badge milestone.</p>
+      </div>
+      <div class="surface card p-6 reveal">
+        <div class="text-xl font-semibold mb-1"><i class="fa-solid fa-sack-dollar text-emerald-400 mr-2"></i>Money Tracking</div>
+        <p class="text-slate-600 dark:text-slate-300">Hitung penghematan beserta grafik interaktif.</p>
+      </div>
+      <div class="surface card p-6 reveal">
+        <div class="text-xl font-semibold mb-1"><i class="fa-solid fa-heart-pulse text-sky-400 mr-2"></i>Health Tracking</div>
+        <p class="text-slate-600 dark:text-slate-300">Timeline pemulihan kesehatan dengan stepper animasi.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-8 text-center text-xs text-slate-500">© <span id="year"></span> NafasBaru</footer>
+
+  <script src="assets/js/nafasbaru.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
